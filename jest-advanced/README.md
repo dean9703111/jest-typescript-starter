@@ -4,7 +4,14 @@
 
 一個功能底下可能有很多函式，如果測試程式沒有適當的區分，那在遇到錯誤時會難以管理，因此我們要對它進行分組（describe）；當我們想測試特定情境時，可以在測試前增加資料（Setup）並於測試後移除（Teardown）；為了讓單元測試更存粹，可以透過模擬函式（Mock function）減少相依性。
 
-> 文末會介紹一款 VSCode 的外掛，搭配使用後便可即時看到測試結果。
+```
+大綱
+
+一、測試分組（describe）
+二、在測試前、後要執行的任務（Setup and Teardown）
+三、用 Mock Function 減少測試時的相依性
+四、VSCode 的 Jest 外掛
+```
 
 ### 一、測試分組（describe）
 
@@ -82,7 +89,7 @@ Jest 有提供 4 種函數：
 - **beforeEach**：在每個測試開始前執行。
 - **afterEach**：在每個測試結束後執行。
 
-下面舉個案例，如果今天要設計一個「考核系統」，除了有考生外，還需要模擬出「合格」、「不合格」的情境，為了避免影響到資料庫，我們可以這樣做。
+舉個例子，如果今天要設計「考核系統」，除了有考生外，還需要模擬出「合格」、「不合格」的情境，為了避免影響到資料庫，我們可以這樣做：
 
 - **user.ts**：我們先預設的 score 的基準為 60 分，可透過 addScore、minusScore 來加減分。
 
@@ -159,7 +166,7 @@ afterAll(() => {
 });
 ```
 
-這邊補充說明一下運行單個測試檔案的指令： `npm run test -t path/user.test.ts`。
+這邊補充說明一下，運行單個測試檔案的指令為： `npm run test -t path/user.test.ts`。
 
 如果運行順利，就會看到下圖的測試結果嚕！
 
@@ -169,7 +176,7 @@ afterAll(() => {
 
 單元測試時，我們更關心「單一功能」的正確與否；如果一個單元測試涵蓋太多函式，那在發生錯誤時，我們很難判斷到底是哪一段發生錯誤。
 
-- **fetch.js**：在這裡，我們能透過「fetchData」呼叫外部 api，而「hideComplete」是設計用來隱藏已完成的 todos。
+- **fetch.js**：我們透過「fetchData」呼叫外部 api，而「hideComplete」是設計用來隱藏已完成的 todos。
 
 ```ts
 import axios from "axios";
@@ -186,7 +193,7 @@ export function hideComplete(data) {
 }
 ```
 
-- **fetch.test.js**：為了減少相依性，我們不希望直接呼叫真實的 api，所以透過 `jest.mock` 將 axios 給 mock 起來；並拆成 3 種測試：「有成功換成模擬資料、資料格式符合預期、獨立測試 hideComplete 函式」。
+- **fetch.test.js**：為了減少相依性，我們不希望直接呼叫真實的 api，所以透過 `jest.mock` 將 axios 給 mock 起來；並透過 3 種情境測試：「有成功換成模擬資料、資料格式符合預期、獨立測試 hideComplete 函式」。
 
 ```ts
 import { fetchData, hideComplete } from "./fetch";
@@ -238,7 +245,7 @@ test("測試 hideComplete 函式運作", async () => {
 
 ### 四、VSCode 的 Jest 外掛
 
-每新增一個測試就要跑一次 `npm run test` 是不是很煩？如果想測試某個檔案還要先確認文件路徑真的讓人心累 😨
+每新增一個測試就要跑一次 `npm run test` 是不是很煩？如果想獨立測試某個檔案還要先確認文件路徑真的讓人心累 😨
 
 但好在 VSCode 有「[Jest](https://marketplace.visualstudio.com/items?itemName=Orta.vscode-jest)」這個 Extensions 讓我們事半功倍。
 
@@ -255,7 +262,7 @@ test("測試 hideComplete 函式運作", async () => {
 失敗的測試會在 expect 下方出現紅色底線，滑鼠移過去就會顯示預期值（Expected）與接收值（Received）的差異。
 ![image](./img/jestErrorExplain.png)
 
-> 身邊有朋友在安裝外掛後遇到了一些奇怪的 Error 無法正常使用，重開 VSCode、看官方文檔怎麼調整都無用，最後用大絕「重新開機」就正常了
+> **備註**：身邊有朋友在安裝外掛後遇到了一些奇怪的 Error 無法正常使用，重開 VSCode、看官方文檔怎麼調整都無用，最後用大絕「重新開機」就正常了
 
 ---
 
