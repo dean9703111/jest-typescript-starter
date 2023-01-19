@@ -6,6 +6,14 @@
 
 在對單元測試有基礎的概念後，會透過實際的範例讓你了解不同匹配器（Matchers）的使用時機，話不多說，我們直接開始吧！
 
+```
+大綱
+
+一、初始化專案、設定測試環境
+二、了解單元測試的結構，撰寫程式
+三、了解 Jest 常用的匹配器（Matchers）
+```
+
 ### 一、初始化專案、設定測試環境
 
 **SETP 1**：初始化專案＆安裝 Jest。
@@ -68,8 +76,8 @@ touch public.ts
 touch public.test.ts
 ```
 
-**SETP 2**：在 public.js 撰寫 `sum` 這個 function，並於 public.test.js 用測試程式來驗證他。
-#### public.js
+**SETP 2**：在 public.ts 撰寫 `sum` 這個 function，並於 public.test.ts 用測試程式來驗證他。
+#### public.ts
 ```js
 export function sum (a: number ,b: number) {
     return a + b;
@@ -86,7 +94,7 @@ test('測試 8 + 9 等於 17', () => {
 ```
 
 **SETP 3**：運行測試指令 `npm run test`
-如果運行順利，就會看到下圖的結果：
+，如果順利就會看到下圖的結果：
 ![image](./img/simpleJest.png)
 
 最後我們再來回顧一下先前提到的結構：
@@ -125,7 +133,7 @@ test('小數點相加', () => {
     expect(value).toBeCloseTo(0.3); // This works.
 });
 ```
-- **toMatch**：應用在小數點的計算。
+- **toMatch**：字串比對。
 ```js
 test('透過 toMatch 確認「stop」是否存在於字串', () => {
     expect('Christoph').toMatch(/stop/);
