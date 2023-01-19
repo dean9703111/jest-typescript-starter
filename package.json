@@ -1,0 +1,12 @@
+{
+  "name": "jest-typescript-starter",
+  "version": "1.0.0",
+  "description": "深入淺出 Jest 測試框架(使用 TypeScript)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["Jest","unit test","frontend test","test framework","vue","vscode","@vue/test-utils"],
+  "author": "Dean Lin",
+  "license": "ISC"
+}
